@@ -1,0 +1,35 @@
+const dataTypes = {
+    varcharPrimary: 'VARCHAR(255) PRIMARY KEY',
+    varchar: 'VARCHAR(255)',
+    int: 'INT',
+    bigint: 'BIGINT',
+    smallint: 'SMALLINT',
+    tinyint: 'TINYINT',
+    bit: 'BIT',
+    float: 'FLOAT',
+    real: 'REAL',
+    decimal: 'DECIMAL(18, 2)',
+    numeric: 'NUMERIC(18, 2)',
+    money: 'MONEY',
+    smallmoney: 'SMALLMONEY',
+    date: 'DATE',
+    time: 'TIME',
+    datetime: 'DATETIME',
+    datetime2: 'DATETIME2',
+    smalldatetime: 'SMALLDATETIME',
+    timestamp: 'TIMESTAMP',
+    char: 'CHAR(255)',
+    nchar: 'NCHAR(255)',
+    text: 'TEXT',
+    ntext: 'NTEXT',
+    binary: 'BINARY(255)',
+    varbinary: 'VARBINARY(255)',
+    image: 'IMAGE',
+    uniqueidentifier: 'UNIQUEIDENTIFIER',
+    sql_variant: 'SQL_VARIANT',
+    xml: 'XML',
+};
+
+module.exports = { 
+    dataTypes
+}
