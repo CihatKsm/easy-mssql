@@ -21,9 +21,9 @@ setTimeout(async () => {
     // console.log(query);
 
     // const simple_scheme = require('./simple_scheme');
-    // const createdTable = await Table('naberad').functions.create(simple_scheme.dataTypes);
+    // const createdTable = await Table('company').functions.create(simple_scheme.dataTypes);
     // console.log(createdTable);
 
-    // const removedTable = await Table('naberad').functions.remove();
+    // const removedTable = await Table('company').functions.remove();
     // console.log(removedTable);
 }, 1000);

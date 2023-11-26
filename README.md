@@ -8,9 +8,9 @@
 ```js
 const config = require('./config');
 
-const { Connect, Table, Request } = require('./database');
-const date = () => new Date()
+const { Connect, Table, Request } = require('easy-mssql');
 
+const date = () => new Date()
 console.log(date(), 'System opened!')
 
 Connect(config.sql)
@@ -29,10 +29,10 @@ setTimeout(async () => {
     // console.log(query);
 
     // const simple_scheme = require('./simple_scheme');
-    // const createdTable = await Table('naberad').functions.create(simple_scheme.dataTypes);
+    // const createdTable = await Table('company').functions.create(simple_scheme.dataTypes);
     // console.log(createdTable);
 
-    // const removedTable = await Table('naberad').functions.remove();
+    // const removedTable = await Table('company').functions.remove();
     // console.log(removedTable);
 }, 1000);
 
