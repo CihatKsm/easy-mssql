@@ -61,7 +61,7 @@ function Table(name) {
      * @returns
      */
     async function createOne(data) {
-        const isData = await findOne({ userId: data?.userId, name: data?.name });
+        const isData = await findOne(data);
         if (isData) return { status: false, message: 'Data already exists.' };
         const { keys, values } = GetPieces(data);
         const query = `INSERT INTO ${name} (${keys.join(', ')}) VALUES (${values.join(', ')})`;
