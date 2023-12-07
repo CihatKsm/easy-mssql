@@ -270,10 +270,11 @@ async function sqlRequestQuery(query, output = false) {
                     console.log('easy-mssql : ' + err);
                     return resolve({ status: false, message: String(err).split('\n')[0], query });
                 }
-                if (output === true) {
-                    if (output_format === 'details') return resolve({ status: true, message: 'Success', data: result.recordset });
-                    else return resolve(result.recordset);
-                }
+
+                if (output !== true) return resolve(true);
+                
+                if (output_format === 'details') return resolve({ status: true, message: 'Success', data: result.recordset });
+                else return resolve(result.recordset);
             });
         } catch (err) {
             console.log('easy-mssql : ' + err);
