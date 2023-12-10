@@ -1,12 +1,12 @@
 {
   "name": "easy-mssql",
-  "version": "0.0.5-beta",
+  "version": "0.0.6-beta",
   "description": "This is a simple mssql module for node.js",
   "main": "database.js",
   "scripts": {
     "start": "node simple_server.js",
     "dev": "nodemon simple_server.js",
-    "update": "update-modules"
+    "update": "update-modules && npm audit fix"
   },
   "author": "CihatKsm <me@cihatksm.com>",
   "license": "MIT",
@@ -17,6 +17,8 @@
   "keywords": [
     "cihatksm",
     "sql",
+    "easymssql",
+    "easy-mssql",
     "mssql",
     "node-mssql",
     "database"
@@ -29,6 +31,6 @@
     "update-modules": "^0.0.5"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.2"
   }
 }
