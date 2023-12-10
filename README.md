@@ -10,10 +10,10 @@ const config = require('./config');
 
 const { Connect, Table, Request } = require('easy-mssql');
 
-const date = () => new Date()
-console.log(date(), 'System opened!')
+const date = () => new Date();
+console.log(date(), 'System opened!');
 
-Connect(config.sql)
+Connect(config.sql);
 
 setTimeout(async () => {
     // const user = await Table('company').findOne({ id: 1 });
