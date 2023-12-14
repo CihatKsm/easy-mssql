@@ -3,30 +3,28 @@ const config = require('./config');
 
 /**
  *
- * @param {*} query This value is the query to be executed in the database.
- * @param {*} output This value is the output to be returned from the database.
+ * @param {*} procedureName This value is the name of the procedure to be executed in the database.
+ * @param {*} referance This value is the referance to be executed in the database.
  * @returns
  */
-module.exports = async (query) => {
+module.exports = async (procedureName, referance = {}) => {
     return await new Promise(async (resolve) => {
         const request = new sql.Request();
-        const config = require('./config');
-
         try {
-            request.query(query, (err, result) => {
-                if (err) {
-                    console.log('easy-mssql : ' + err);
-                    return resolve({ status: false, message: String(err).split('\n')[0], query });
-                }
+            for (const key of Object.keys(referance)) {
+                var value = referance[key];
+                const valueType = typeof value;
+                const sqlType = valueType === 'number' ? sql.Int : valueType === 'boolean' ? sql.Bit : sql.NVarChar;
+                value = valueType === 'boolean' ? value === true ? 1 : 0 : valueType === 'object' ? JSON.stringify(value) : value;
+                request.input(key, sqlType, value);
+            }
 
-                if (output !== true) return resolve(true);
-
-                if (output_format === 'details') return resolve({ status: true, message: 'Success', data: result.recordset });
-                else return resolve(result.recordset);
-            });
+            return request.execute(procedureName)
+                .then(result => resolve({ status: true, message: 'Success', data: result.recordset }))
+                .catch(err => resolve({ status: false, message: String(err).split('\n')[0], data: null }))
         } catch (err) {
             console.log('easy-mssql : ' + err);
-            return resolve({ status: false, message: String(err).split('\n')[0], query });
+            return resolve({ status: false, message: String(err).split('\n')[0], data: null })
         }
     });
 }
