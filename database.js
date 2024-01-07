@@ -89,10 +89,12 @@ function Table(name) {
      * @param {*} referance Deleting all data in database by reference value.
      */
     async function deleteAll(referance) {
-        const { keys, values } = GetPieces(referance);
-        if (keys.length === 0) return { status: false, message: "No conditions provided for deletion" };
+        if (!referance?.$verify) {
+            const { keys, values } = GetPieces(referance);
+            if (keys.length === 0) return { status: false, message: "No conditions provided for deletion" };
+        }
 
-        const findDatas = await find(referance);
+        const findDatas = await find(!referance?.$verify ? referance : {});
         if (findDatas.length === 0) return { status: false, message: 'Data not found.' };
 
         for (const data of findDatas) await deleteOne(data);
