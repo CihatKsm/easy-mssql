@@ -9,8 +9,8 @@ console.log(date(), 'System opened!')
 Connect(config.sql, async () => {
     console.log(date(), 'Database connected!');
     
-    const user = await Table('account').find();
-    console.log(user);
+    // const user = await Table('account').find();
+    // console.log(user);
 
     // const createdUser = await Table('account').createOne({ id: 250320091115, username: 'Cihat Keser', email: 'asd@gmail.com' });
     // console.log(createdUser);
