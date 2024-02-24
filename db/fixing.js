@@ -54,9 +54,9 @@ function ValueFix(value) {
 
 function ReValueFix(value) {
     if (value == 'NULL') return null;
+    if (value == 'null') return null;
     if (value == 'NaN') return null;
     if (value == 'undefined') return null;
-    if (value == 'null') return null;
     if (value == '1') return true;
     if (value == '0') return false;
     return value;
