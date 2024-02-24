@@ -6,11 +6,17 @@ const date = () => new Date()
 console.log(date(), 'System opened!')
 
 //SetConfig.logingMode(true);
-Connect(config.sql)
+Connect(config.sql, async () => {
+    console.log(date(), 'Database connected!');
+    
+    const user = await Table('account').find();
+    console.log(user);
 
-setTimeout(async () => {
-    const user = await Table('account').findOne({ id: 250320091115 });
-    console.log(user.email);
+    // const createdUser = await Table('account').createOne({ id: 250320091115, username: 'Cihat Keser', email: 'asd@gmail.com' });
+    // console.log(createdUser);
+
+    //const updatedUser = await Table('account').updateOne({ id: 250320091115 }, { username: null, email: 'asd@asd.com', verify_status: true });
+    //console.log(updatedUser);
 
     // const info = await Table('company').functions.info();
     // console.log(info); 
@@ -27,4 +33,7 @@ setTimeout(async () => {
 
     // const removedTable = await Table('company').functions.remove();
     // console.log(removedTable);
+});
+
+setTimeout(async () => {
 }, 1000);

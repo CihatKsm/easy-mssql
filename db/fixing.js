@@ -6,16 +6,21 @@
 function dataFixing(data) {
     const dataString = JSON.stringify(data);
     if (!data || typeof data !== 'object' || !dataString?.startsWith('{') || !dataString?.endsWith('}'))
-        return { status: false, message: 'Data is not object.', data: null };
+        return false;
 
     for (const key of Object.keys(data)) {
         const value = data[key];
-        if (typeof value !== 'string' || !value?.startsWith('[') || !value?.endsWith(']')) continue;
+        if (typeof value !== 'string') continue;
+        if (!value?.startsWith('[') || !value?.endsWith(']')) {
+            try { data[key] = ReValueFix(value) }
+            catch (err) { data[key] = value }
+            continue;
+        }
         try { data[key] = JSON.parse(value) }
         catch (err) { data[key] = value }
     }
 
-    return { status: true, message: 'Success', data };
+    return data;
 }
 
 /**
@@ -27,10 +32,10 @@ function datasFixing(datas) {
     var _datas = [];
     const datasString = JSON.stringify(datas);
     if (!datas || typeof datas !== 'object' || !datasString?.startsWith('[') || !datasString?.endsWith(']'))
-        return { status: false, message: 'Datas is not array.', datas: null };
+        return false;
 
     for (const data of datas) _datas.push(dataFixing(data));
-    return { status: true, message: 'Success', datas: _datas };
+    return _datas;
 }
 
 /**
@@ -39,10 +44,22 @@ function datasFixing(datas) {
  * @returns
  */
 function ValueFix(value) {
-    return value.replace(`'undefined'`, `'null'`)
-        .replace(`'NaN'`, `'null'`)
+    return value
+        .replace(`'undefined'`, `NULL`)
+        .replace(`'NaN'`, `NULL`)
+        .replace(`'null'`, `NULL`)
         .replace(`'true'`, `'1'`)
         .replace(`'false'`, `'0'`);
 }
 
-module.exports = { data: dataFixing, datas: datasFixing, value: ValueFix };
+function ReValueFix(value) {
+    if (value == 'NULL') return null;
+    if (value == 'NaN') return null;
+    if (value == 'undefined') return null;
+    if (value == 'null') return null;
+    if (value == '1') return true;
+    if (value == '0') return false;
+    return value;
+}
+
+module.exports = { data: dataFixing, datas: datasFixing, value: ValueFix, reValue: ReValueFix};

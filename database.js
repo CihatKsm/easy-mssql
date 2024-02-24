@@ -3,6 +3,7 @@ const Procedure = require('./db/procedure');
 const Query = require('./db/query');
 const GetPieces = require('./db/getPieces');
 const Fixing = require('./db/fixing');
+const fixing = require('./db/fixing');
 const SetConfig = require('./db/config').set;
 
 /**
@@ -18,9 +19,10 @@ function Table(name) {
      */
     async function find(referance) {
         const { keys, values } = GetPieces(referance);
-        const ref = keys.length > 0 ? `WHERE ${keys.map((key, index) => `${key} = ${Fixing.value(values[index])}`).join(' AND ')}` : '';
+        const ref = keys.length > 0 ? `WHERE ${keys.map((key, index) => `${key} = ${values[index]}`).join(' AND ')}` : '';
         const query = `SELECT * FROM ${name} ${ref}`;
-        return (await Query(query))?.data || [];
+        const data = (await Query(query))?.data || [];
+        return fixing.datas(data);
     }
 
     /**
@@ -61,8 +63,8 @@ function Table(name) {
         const isData = await findOne(referance);
         if (!isData) return { status: false, message: 'Data not found.' };
 
-        const conditions = refKeys.map((key, index) => `${key} = ${Fixing.value(refValues[index])}`).join(' AND ');
-        const setValues = dataKeys.map((key, index) => `${key} = ${Fixing.value(dataValues[index])}`).join(', ');
+        const conditions = refKeys.map((key, index) => `${key} = ${refValues[index]}`).join(' AND ');
+        const setValues = dataKeys.map((key, index) => `${key} = ${dataValues[index]}`).join(', ');
 
         const query = `UPDATE ${name} SET ${setValues} WHERE ${conditions}`;
         return (await Query(query))?.status || false;
@@ -79,7 +81,7 @@ function Table(name) {
         const isData = await findOne(referance);
         if (!isData) return { status: false, message: 'Data not found.' };
 
-        const conditions = keys.map((key, index) => `${key} = ${Fixing.value(values[index])}`).join(' AND ');
+        const conditions = keys.map((key, index) => `${key} = ${values[index]}`).join(' AND ');
         const query = `DELETE FROM ${name} WHERE ${conditions}`;
         return (await Query(query))?.status || false;
     }

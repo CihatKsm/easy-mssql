@@ -10,11 +10,13 @@ module.exports = (data) => {
     const dataString = JSON.stringify(data);
     if (!data || typeof data !== 'object' || !dataString?.startsWith('{') || !dataString?.endsWith('}')) return datas;
     datas.keys = Object?.keys(data) || [];
+
     datas.values = Object?.values(data)?.map(v => Fixing.value(`'${v}'`)) || [];
-    datas.values = datas.values.map(m => {
-        let value = m.slice(1, -1);
-        value = value.replaceAll(`\'`, `\'\'`);
-        return `'${value}'`;
+    datas.values = datas.values.map(value => {
+        if (value == 'NULL') return value;
+        return `'${value.slice(1, -1).replaceAll(`\'`, `\'\'`)}'`;
     })
+
+    console.log(datas);
     return datas;
 }
