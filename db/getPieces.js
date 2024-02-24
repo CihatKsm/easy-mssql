@@ -17,6 +17,5 @@ module.exports = (data) => {
         return `'${value.slice(1, -1).replaceAll(`\'`, `\'\'`)}'`;
     })
 
-    console.log(datas);
     return datas;
 }
