@@ -110,6 +110,7 @@ function Table(name) {
         functions: TableFunctions(name)
     };
 }
+
 /**
  *
  * @param {*} name This value is the name of the table to be added to the table.
